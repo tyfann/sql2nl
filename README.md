@@ -4,6 +4,10 @@ This repository contains the code for the whole process in training a model whic
 
 The task mainly concerns on problems related to Chinese Text-to-SQL.
 
+## Environment Prepare
+
+`pip install -r requirement.txt`
+
 ## Dataset Prepare
 
 First we need to get the origin training data from [Chase](https://github.com/xjtu-intsoft/chase/tree/page/data).
