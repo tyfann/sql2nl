@@ -31,10 +31,11 @@ sql2nl
 You should rename the origin chase dataset file like this:
 ```shell
 chase_table.json -> tables.json
-chase_train.json -> train.json
-chase_dev.json -> dev.json
-chase_test.json -> test.json
 ```
+When unzip `database.zip` file, you should use the following instruction to solve the problem of Chinese garbled characters: 
+
+`unzip -O cp936 database.zip`
+
 
 And then when you get `database` directory, you need to run file rebase script so as to make the file struct looks like `Spider-database`.
 

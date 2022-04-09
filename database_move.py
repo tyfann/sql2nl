@@ -3,7 +3,6 @@ import glob
 import shutil
 from tqdm import tqdm
 
-os.chdir('../')
 
 
 def db_mv():
