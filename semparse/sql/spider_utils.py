@@ -336,8 +336,9 @@ def extract_tree_style(sent):
     rnt = []
 
 if __name__ == '__main__':
-    import stanza
-    stanza_model = stanza.Pipeline('en')
-    doc = stanza_model("what is the name of the breed with the most dogs ?")
-    word=[word.lemma for sent in doc.sentences for word in sent.words]
-    rnt = []
+    pass
+    # import stanza
+    # stanza_model = stanza.Pipeline('en')
+    # doc = stanza_model("what is the name of the breed with the most dogs ?")
+    # word=[word.lemma for sent in doc.sentences for word in sent.words]
+    # rnt = []

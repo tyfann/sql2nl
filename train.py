@@ -5,34 +5,37 @@ from datasets.dataset_dict import DatasetDict
 from datasets import Dataset
 import numpy as np
 import argparse
+import glob
 
 import os
 
 
-def prepare_translation_datasets(data_path):
-    with open(os.path.join(data_path, "train.tgt"), "r", encoding="utf-8") as f:
-        sql_text = f.readlines()
-        sql_text = [text.strip("\n") for text in sql_text]
-
-    with open(os.path.join(data_path, "train.src"), "r") as f:
-        nl_text = f.readlines()
-        nl_text = [text.strip("\n") for text in nl_text]
-
+def prepare_translation_datasets(data_paths):
     train_data = []
-    for sql, nl in zip(sql_text, nl_text):
-        train_data.append({'sql': sql, 'nl': nl})
-
-    with open(os.path.join(data_path, "dev.tgt"), "r", encoding="utf-8") as f:
-        sql_text = f.readlines()
-        sql_text = [text.strip("\n") for text in sql_text]
-
-    with open(os.path.join(data_path, "dev.src"), "r") as f:
-        nl_text = f.readlines()
-        nl_text = [text.strip("\n") for text in nl_text]
-
     test_data = []
-    for sql, nl in zip(sql_text, nl_text):
-        test_data.append({'sql': sql, 'nl': nl})
+
+    for data_path in data_paths:
+        with open(os.path.join(data_path, "train.src"), "r", encoding="utf-8") as f:
+            sql_text = f.readlines()
+            sql_text = [text.strip("\n") for text in sql_text]
+
+        with open(os.path.join(data_path, "train.tgt"), "r") as f:
+            nl_text = f.readlines()
+            nl_text = [text.strip("\n") for text in nl_text]
+
+        for sql, nl in zip(sql_text, nl_text):
+            train_data.append({'sql': sql, 'nl': nl})
+
+        with open(os.path.join(data_path, "dev.src"), "r", encoding="utf-8") as f:
+            sql_text = f.readlines()
+            sql_text = [text.strip("\n") for text in sql_text]
+
+        with open(os.path.join(data_path, "dev.tgt"), "r") as f:
+            nl_text = f.readlines()
+            nl_text = [text.strip("\n") for text in nl_text]
+
+        for sql, nl in zip(sql_text, nl_text):
+            test_data.append({'sql': sql, 'nl': nl})
 
     train_dict = {'id': np.arange(len(train_data)),
                   'translation': train_data}
@@ -103,8 +106,9 @@ def train(path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset_path", default='./dataset_post/chase_sl')
+    parser.add_argument("--dataset_path", default='./dataset_post')
     args = parser.parse_args()
     path = args.dataset_path
 
-    train(path)
+    paths = glob.glob(os.path.join(path, '*'))
+    train(paths)
